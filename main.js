@@ -60,8 +60,8 @@ app.use(
   })
 );
 
-// const router = require("./routes/spread");
-// app.use("/spread", router);
+const router = require("./conversion/routes");
+app.use("/", router);
 
 // server start up
 app.listen(config.port, async () => {
