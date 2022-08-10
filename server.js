@@ -7,8 +7,10 @@ const config = require("./config");
 
 const app = Express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: config.contentSizeLimit }));
+app.use(
+  bodyParser.urlencoded({ limit: config.contentSizeLimit, extended: true })
+);
 
 // static files
 app.use(
