@@ -22,6 +22,7 @@ Call the endpoints directly in your browser or with POSTMAN
 
 - `GET http://localhost:3008/json2xlsx`: returns an XLSX file
 - `GET http://localhost:3008/json2pdf`: returns a PDF file
+- you can include an optional query param `fileName` with possible values: `heavy-table` and `light-table` to test out different input files. It defaults to heavy-table for the test
 
 ###### Option B:
 
