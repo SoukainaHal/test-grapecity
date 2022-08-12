@@ -22,7 +22,7 @@ module.exports = {
     const page = await browser.newPage();
     await page.setContent(domHtml);
     const executionContext = await page.mainFrame().executionContext();
-    const data = getInputData();
+    const data = getInputData(req.query.fileName);
 
     async function getPdf(data) {
       return executionContext.evaluate((data) => {
@@ -56,6 +56,10 @@ module.exports = {
       console.timeEnd("PDF data generation time");
 
       res.set("Content-Type", "application/pdf");
+      res.set(
+        "Content-Disposition",
+        `attachment; filename=download-${Date.now()}.pdf`
+      );
       res.send(pdfData);
     } catch (err) {
       next(err);
