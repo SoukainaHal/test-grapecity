@@ -1,6 +1,7 @@
 "use strict";
 
 const config = require("../config");
+const getInputData = require("../utils/file-to-json");
 
 const domHtml = `<!DOCTYPE html><html lang="en">
     <head>
@@ -16,7 +17,7 @@ module.exports = {
     const page = await browser.newPage();
     await page.setContent(domHtml);
     const executionContext = await page.mainFrame().executionContext();
-    const data = req.body;
+    const data = getInputData(req.query.fileName);
 
     async function getXlsx(data) {
       return executionContext.evaluate((data) => {
@@ -59,11 +60,18 @@ module.exports = {
     }
 
     try {
+      console.time("XLSX data generation time");
       const xlsxString = await getXlsx(data);
       const xlsxData = Buffer.from(xlsxString, "binary");
+      console.timeEnd("XLSX data generation time");
+
       res.set(
         "Content-Type",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.set(
+        "Content-Disposition",
+        `attachment; filename=download-${Date.now()}.xlsx`
       );
       res.send(xlsxData);
     } catch (err) {
