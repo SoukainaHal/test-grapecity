@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node server.js",
-    "run-cli": "cd test-diff && sh compare.sh"
+    "run-script": "cd test-diff && sh compare.sh"
   },
   "dependencies": {
     "@grapecity/spread-excelio": "^14.1.3",
